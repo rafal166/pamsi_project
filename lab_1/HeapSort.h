@@ -14,12 +14,6 @@ template <typename T>
 class HeapSort {
 private:
 
-	static void swap(shared_ptr<vector <T>> table, int one, int two) {
-		T temp = (*table)[two];
-		(*table)[two] = (*table)[one];
-		(*table)[one] = temp;
-	}
-
 	static void maxHeapValidate(shared_ptr<vector <T>> table, int size, int parentIndex) {
 
 		int first = parentIndex * 2 + 1;
@@ -39,6 +33,7 @@ private:
 	}
 
 	static void heapSort(shared_ptr<vector <T>> table) {
+
 		int size = table->size();
 
 		for (int i = size / 2 - 1; i >= 0; i--) // budowa kopca maksymalnego
@@ -53,19 +48,38 @@ private:
 
 public:
 
-	static vector <T> sort(vector <T> tables) {
-		shared_ptr<vector < T>> tables_tmpl = make_shared<vector < T >> (tables);
-
+	static void sort(shared_ptr<vector < T>> tables) {
 		chrono::high_resolution_clock Clock;
 		auto Start = Clock.now();
 
-		HeapSort<T>::heapSort(tables_tmpl);
+		HeapSort<T>::heapSort(tables);
 
 		auto End = Clock.now();
 		chrono::duration<double> Time_delay = End - Start;
 		showStatistic("Heap sort", Time_delay);
-		return *tables_tmpl;
 
+	}
+
+	static void sortPart(shared_ptr<vector < T>> table, unsigned int startIndex, unsigned int endIndex) {
+		int i = startIndex;
+		int k = 0;
+		shared_ptr<vector < T>> help_table = make_shared<vector < T >> ();
+
+		for (; i < endIndex; i++) // przepisywanie fragmentu do tablicy pomocniczej
+			help_table->push_back((*table)[i]);
+
+		HeapSort<T>::heapSort(help_table); // sortowanie tablicy pomocniczej
+
+		for (i = startIndex; i < endIndex; i++) // ponowne przepisywanie do głównej tablicy
+			(*table)[i] = (*help_table)[k++];
+	}
+
+	//helper
+
+	static void swap(shared_ptr<vector <T>> table, int one, int two) {
+		T temp = (*table)[two];
+		(*table)[two] = (*table)[one];
+		(*table)[one] = temp;
 	}
 };
 

@@ -5,7 +5,9 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>HeapSort.h</itemPath>
+      <itemPath>IntroSort.h</itemPath>
       <itemPath>MergeSort.h</itemPath>
+      <itemPath>QuickSort.h</itemPath>
       <itemPath>showStatistic.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -41,7 +43,11 @@
       </compileType>
       <item path="HeapSort.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="IntroSort.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="MergeSort.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="QuickSort.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -70,7 +76,11 @@
       </compileType>
       <item path="HeapSort.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="IntroSort.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="MergeSort.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="QuickSort.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -59,18 +59,16 @@ private:
 
 public:
 
-	static vector <T> sort(vector <T> tables) {
-		shared_ptr<vector < T>> tables_tmpl = make_shared<vector < T >> (tables);
+	static void sort(shared_ptr<vector <T>> tables) {
 
 		chrono::high_resolution_clock Clock;
 		auto Start = Clock.now();
 
-		MergeSort<T>::merge_sort(tables_tmpl, 0, tables_tmpl->size() - 1);
+		MergeSort<T>::merge_sort(tables, 0, tables->size() - 1);
 
 		auto End = Clock.now();
 		chrono::duration<double> Time_delay = End - Start;
 		showStatistic("Merge sort", Time_delay);
-		return *tables_tmpl;
 	}
 };
 
