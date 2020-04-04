@@ -11,76 +11,125 @@
 #include <cmath>
 #include <memory>
 #include <time.h> 
+#include <thread>
+#include "utilities.h" 
 #include "MergeSort.h" 
 #include "HeapSort.h" 
 #include "QuickSort.h" 
 #include "IntroSort.h" 
+#include "CSVSaver.h" 
 
 using namespace std;
 
-template <typename T>
-void printArrays(shared_ptr<vector<shared_ptr<vector <T>>>> tables) {
+#define NUM_ARRAYS 100
+#define NUM_ELEM_IN_ARRAY_LV0 10000  // A
+#define NUM_ELEM_IN_ARRAY_LV1 50000  // B
+#define NUM_ELEM_IN_ARRAY_LV2 100000 // C
+#define NUM_ELEM_IN_ARRAY_LV3 500000 // D
+#define NUM_ELEM_IN_ARRAY_LV4 1000000 // E
+#define SAVING_VERSION 1
 
-	int counter = 0;
-	for (shared_ptr<vector < T >> vectors : *tables) {
-		cout << counter++ << ") ";
-		for (T data : *vectors) {
-			cout << data << " ";
-			if (data < 10)
-				cout << " ";
-		}
-		cout << endl;
-	}
+vector<string> CSVcolumnList = {"sortType", "A", "B", "C", "D", "E"};
+vector<float> sortTypes = {0, 25, 50, 75, 95, 99, 99.7};
+
+void test_merge_sort() {
+	CSVSaver saver = CSVSaver("MergeSort_" + to_string(SAVING_VERSION) + ".csv", CSVcolumnList);
+	shared_ptr<vector < shared_ptr<vector < int>>>> array_lv0, array_lv1, array_lv2, array_lv3, array_lv4;
+
+	// Wszystkie elementy tablicy losowe
+	array_lv0 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV0);
+
+	saver.addData(MergeSort<int>::sortAll(array_lv0));
+
+	saver.save();
 }
 
-template <typename T>
-shared_ptr<vector<shared_ptr<vector <T>>>> allocateArrays(int numberArrays, int numberElemsInOneArray, float sortPercent = 0, bool sortedReverse = false) {
-	vector < shared_ptr<vector < T>>> first_vec;
-	shared_ptr<vector < shared_ptr<vector < T>>>> tables = make_shared <vector < shared_ptr<vector < T>>> >(first_vec);
+void test_quick_sort() {
+	CSVSaver saver = CSVSaver("QuickSort_" + to_string(SAVING_VERSION) + ".csv", CSVcolumnList);
+	shared_ptr<vector < shared_ptr<vector < int>>>> array_lv0, array_lv1, array_lv2, array_lv3, array_lv4;
 
-	int numSorted = floor(numberElemsInOneArray * (sortPercent / 100));
-	int numNotSorted = numberElemsInOneArray - numSorted;
+	for (float type : sortTypes) {
+		saver.addData("First " + to_string(type) + " sorted");
+		array_lv0 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV0, type);
+		array_lv1 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV1, type);
+		array_lv2 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV2, type);
+		array_lv3 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV3, type);
+		array_lv4 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV4, type);
 
-	for (int a = 0; a < numberArrays; a++) {
-		shared_ptr<vector < T>> tmpVector = make_shared<vector < T >> ();
-		//
-		for (int b = 0; b < numSorted; b++) {
-			if (sortedReverse)
-				tmpVector->push_back(numSorted - b);
-			else
-				tmpVector->push_back(b);
-		}
-		for (int c = 0; c < numNotSorted; c++)
-			tmpVector->push_back(rand() % 20);
-
-		tables->push_back(tmpVector);
+		saver.addData(QuickSort<int>::sortAll(array_lv0));
+		saver.addData(QuickSort<int>::sortAll(array_lv1));
+		saver.addData(QuickSort<int>::sortAll(array_lv2));
+		saver.addData(QuickSort<int>::sortAll(array_lv3));
+		saver.addData(QuickSort<int>::sortAll(array_lv4));
+		saver.newLine();
 	}
 
-	return tables;
+	// Wszystkie elementy posortowane odwrotnie
+	saver.addData("All sorted reverse");
+	array_lv0 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV0, 100, true);
+	array_lv1 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV1, 100, true);
+	array_lv2 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV2, 100, true);
+	array_lv3 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV3, 100, true);
+	array_lv4 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV4, 100, true);
+
+	saver.addData(QuickSort<int>::sortAll(array_lv0));
+	saver.addData(QuickSort<int>::sortAll(array_lv1));
+	saver.addData(QuickSort<int>::sortAll(array_lv2));
+	saver.addData(QuickSort<int>::sortAll(array_lv3));
+	saver.addData(QuickSort<int>::sortAll(array_lv4));
+
+	saver.save();
 }
 
-#define NUM_ARRAYS 2
-#define NUM_ELEM_IN_ARRAY 200
+void test_intro_sort() {
+	CSVSaver saver = CSVSaver("IntroSort_" + to_string(SAVING_VERSION) + ".csv", CSVcolumnList);
+	shared_ptr<vector < shared_ptr<vector < int>>>> array_lv0, array_lv1, array_lv2, array_lv3, array_lv4;
+
+	for (float type : sortTypes) {
+		saver.addData("First " + to_string(type) + " sorted");
+		array_lv0 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV0, type);
+		array_lv1 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV1, type);
+		array_lv2 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV2, type);
+		array_lv3 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV3, type);
+		array_lv4 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV4, type);
+
+		saver.addData(IntroSort<int>::sortAll(array_lv0));
+		saver.addData(IntroSort<int>::sortAll(array_lv1));
+		saver.addData(IntroSort<int>::sortAll(array_lv2));
+		saver.addData(IntroSort<int>::sortAll(array_lv3));
+		saver.addData(IntroSort<int>::sortAll(array_lv4));
+
+		saver.newLine();
+	}
+
+
+	// Wszystkie elementy posortowane odwrotnie
+	saver.addData("All sorted reverse");
+	array_lv0 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV0, 100, true);
+	array_lv1 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV1, 100, true);
+	array_lv2 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV2, 100, true);
+	array_lv3 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV3, 100, true);
+	array_lv4 = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY_LV4, 100, true);
+
+	saver.addData(IntroSort<int>::sortAll(array_lv0));
+	saver.addData(IntroSort<int>::sortAll(array_lv1));
+	saver.addData(IntroSort<int>::sortAll(array_lv2));
+	saver.addData(IntroSort<int>::sortAll(array_lv3));
+	saver.addData(IntroSort<int>::sortAll(array_lv4));
+
+	saver.save();
+}
 
 int main(int argc, char** argv) {
 	srand((unsigned) time(NULL)); // inicjowanie generatora liczb losowych
 
-	// alokajca tablic do sortowania
-	auto sorted_merge = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY);
-	auto sorted_heap = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY);
-	auto sorted_quick = allocateArrays<int>(NUM_ARRAYS, NUM_ELEM_IN_ARRAY);
+	thread merge_thread(test_merge_sort);
+	//		thread quick_thread(test_quick_sort);
+	//		thread intro_thread(test_intro_sort);
 
-
-	for (shared_ptr<vector <int>> vectors : *sorted_heap) {
-		//		MergeSort<int>::sort(vectors);
-		//		HeapSort<int>::sortPart(vectors, 4, 10);
-		IntroSort<int>::sort(vectors);
-		//		QuickSort<int>::sort(vectors);
-	}
-	//	cout << endl << "__________ Print End Quick __________" << endl << endl;
-	//	printArrays(make_shared<vector<vector <int>>>(sorted_quick));
-	cout << endl << "__________ Print End Heap __________" << endl << endl;
-	printArrays(sorted_heap);
+	merge_thread.join();
+	//	quick_thread.join();
+	//	intro_thread.join();
 
 	return 0;
 }

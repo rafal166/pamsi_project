@@ -32,7 +32,10 @@ private:
 
 	}
 
-	static void heapSort(shared_ptr<vector <T>> table) {
+
+public:
+
+	static void sort(shared_ptr<vector < T>> table) {
 
 		int size = table->size();
 
@@ -46,20 +49,6 @@ private:
 
 	}
 
-public:
-
-	static void sort(shared_ptr<vector < T>> tables) {
-		chrono::high_resolution_clock Clock;
-		auto Start = Clock.now();
-
-		HeapSort<T>::heapSort(tables);
-
-		auto End = Clock.now();
-		chrono::duration<double> Time_delay = End - Start;
-		showStatistic("Heap sort", Time_delay);
-
-	}
-
 	static void sortPart(shared_ptr<vector < T>> table, unsigned int startIndex, unsigned int endIndex) {
 		int i = startIndex;
 		int k = 0;
@@ -68,10 +57,21 @@ public:
 		for (; i < endIndex; i++) // przepisywanie fragmentu do tablicy pomocniczej
 			help_table->push_back((*table)[i]);
 
-		HeapSort<T>::heapSort(help_table); // sortowanie tablicy pomocniczej
+		HeapSort<T>::sort(help_table); // sortowanie tablicy pomocniczej
 
 		for (i = startIndex; i < endIndex; i++) // ponowne przepisywanie do głównej tablicy
 			(*table)[i] = (*help_table)[k++];
+	}
+
+	static double sortAll(shared_ptr<vector<shared_ptr<vector <T>>>> tables) {
+		chrono::high_resolution_clock Clock;
+		auto Start = Clock.now();
+
+		for (shared_ptr<vector < T >> vectors : *tables)
+			HeapSort<T>::sort(vectors);
+
+		auto End = Clock.now();
+		return chrono::duration<double>(End - Start).count();
 	}
 
 	//helper

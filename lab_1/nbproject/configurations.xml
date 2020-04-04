@@ -4,11 +4,13 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>CSVSaver.h</itemPath>
       <itemPath>HeapSort.h</itemPath>
       <itemPath>IntroSort.h</itemPath>
       <itemPath>MergeSort.h</itemPath>
       <itemPath>QuickSort.h</itemPath>
       <itemPath>showStatistic.h</itemPath>
+      <itemPath>utilities.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -41,6 +43,8 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="CSVSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="HeapSort.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="IntroSort.h" ex="false" tool="3" flavor2="0">
@@ -52,6 +56,8 @@
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="showStatistic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utilities.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -74,6 +80,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="CSVSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="HeapSort.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="IntroSort.h" ex="false" tool="3" flavor2="0">
@@ -85,6 +93,8 @@
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="showStatistic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utilities.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -9,14 +9,10 @@
 #ifndef MARGE_SORT_H
 #define MARGE_SORT_H
 
-#include <cstdlib>
 #include <iostream>
 #include <vector>
 #include <memory>
-#include <iomanip>
-#include <fstream>
 #include <chrono>
-#include "showStatistic.h"
 
 using namespace std;
 
@@ -25,9 +21,7 @@ class MergeSort {
 private:
 
 	static void merge(shared_ptr<vector <T>> tables, int leftStart, int rightEnd) {
-		vector<T> tmpl;
-		for (T value : *tables)
-			tmpl.push_back(value);
+		vector<T> tmpl = *tables;
 
 		int leftEnd = (rightEnd + leftStart) / 2;
 		int right = leftEnd + 1;
@@ -45,30 +39,30 @@ private:
 			(*tables)[index++] = tmpl[left++];
 	}
 
-	static void merge_sort(shared_ptr<vector <T>> tables, int left, int right) {
+public:
+
+	static void sort(shared_ptr<vector <T>> tables, int left, int right) {
 		if (right <= left) return;
 
 		int center = (left + right) / 2;
 
-		MergeSort<T>::merge_sort(tables, left, center);
-		MergeSort<T>::merge_sort(tables, center + 1, right);
+		MergeSort<T>::sort(tables, left, center);
+		MergeSort<T>::sort(tables, center + 1, right);
 
 		MergeSort<T>::merge(tables, left, right);
 
 	}
 
-public:
-
-	static void sort(shared_ptr<vector <T>> tables) {
-
+	static double sortAll(shared_ptr<vector<shared_ptr<vector <T>>>> tables) {
 		chrono::high_resolution_clock Clock;
 		auto Start = Clock.now();
 
-		MergeSort<T>::merge_sort(tables, 0, tables->size() - 1);
+		for (shared_ptr<vector <int>> vectors : *tables)
+			MergeSort<int>::sort(vectors, 0, vectors->size() - 1);
 
 		auto End = Clock.now();
-		chrono::duration<double> Time_delay = End - Start;
-		showStatistic("Merge sort", Time_delay);
+		cout << "Time from Merge: " << chrono::duration<double>(End - Start).count() << endl;
+		return chrono::duration<double>(End - Start).count();
 	}
 };
 

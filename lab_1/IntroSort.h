@@ -10,7 +10,6 @@
 #ifndef INTROSORT_H
 #define INTROSORT_H
 #include <cmath>
-#include "HeapSort.h" 
 
 template <typename T>
 class IntroSort {
@@ -18,19 +17,16 @@ class IntroSort {
 	static int partition(shared_ptr<vector <T>> table, int left, int right) {
 
 		int pivot = (*table)[right];
-		// Index of smaller element 
 		int i = (left - 1);
+
 		for (int j = left; j <= right - 1; j++) {
 
-			// If the current element is smaller 
-			// than or equal to the pivot 
 			if ((*table)[j] <= pivot) {
-
-				// increment index of smaller element 
 				i++;
 				HeapSort<T>::swap(table, i, j);
 			}
 		}
+
 		HeapSort<T>::swap(table, i + 1, right);
 		return (i + 1);
 	}
@@ -42,24 +38,57 @@ class IntroSort {
 			} else {
 				currDepth--;
 
-				int positionPivot = (left + right) / 2;
-				HeapSort<T>::swap(table, positionPivot, right);
+				int i = left;
+				int j = right;
+				int PositionPivot = (i + j) / 2;
+				T Pivot = (*table)[PositionPivot];
+				T tmpl;
 
-				int p = IntroSort<T>::partition(table, left, right);
+				while (i <= j) {
+					while ((*table)[i] < Pivot)
+						i++;
 
-				IntroSort<T>::introSort(table, left, p - 1, currDepth);
-				IntroSort<T>::introSort(table, p + 1, right, currDepth);
+					while ((*table)[j] > Pivot)
+						j--;
+
+					if (i <= j) {
+						tmpl = (*table)[i];
+						(*table)[i] = (*table)[j];
+						(*table)[j] = tmpl;
+						i++;
+						j--;
+					}
+				}
+				if (j > left)
+					IntroSort<T>::introSort(table, left, j, currDepth);
+
+				if (i < right)
+					IntroSort<T>::introSort(table, i, right, currDepth);
+
 			}
 		} else
 			HeapSort<T>::sortPart(table, left, right);
 
 	}
-private:
+
 public:
 
 	static void sort(shared_ptr<vector < T>> table) {
 		int maxDepth = (int) floor(2 * log(table->size()) / M_LN2);
 		IntroSort<T>::introSort(table, 0, table->size(), maxDepth);
+	}
+
+	static double sortAll(shared_ptr<vector<shared_ptr<vector <T>>>> tables) {
+
+		chrono::high_resolution_clock Clock;
+		auto Start = Clock.now();
+
+		for (shared_ptr<vector < T >> vectors : *tables)
+			IntroSort<T>::sort(vectors);
+
+		auto End = Clock.now();
+		cout << "Time from Intro: " << chrono::duration<double>(End - Start).count() << endl;
+		return chrono::duration<double>(End - Start).count();
 	}
 
 };

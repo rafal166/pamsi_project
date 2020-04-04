@@ -11,13 +11,13 @@
 
 template <typename T>
 class QuickSort {
-private:
+public:
 
-	static void quickSort(shared_ptr<vector <T>> table, int left, int right) {
+	static void sort(shared_ptr<vector <T>> table, int left, int right) {
 		int i = left;
 		int j = right;
 		int PositionPivot = (i + j) / 2;
-		T Pivot = (*table)[PositionPivot]; 
+		T Pivot = (*table)[PositionPivot];
 		T tmpl; //zmienna pomocnicza
 
 		while (i <= j) {
@@ -37,22 +37,23 @@ private:
 			}
 		}
 		if (j > left)
-			QuickSort::quickSort(table, left, j);
+			QuickSort::sort(table, left, j);
 
 		if (i < right)
-			QuickSort::quickSort(table, i, right);
+			QuickSort::sort(table, i, right);
 	}
-public:
 
-	static void sort(shared_ptr<vector <T>> tables) {
+	static double sortAll(shared_ptr<vector<shared_ptr<vector <T>>>> tables) {
 		chrono::high_resolution_clock Clock;
 		auto Start = Clock.now();
 
-		QuickSort<T>::quickSort(tables, 0, tables->size());
+		for (shared_ptr<vector <int>> vectors : *tables) {
+			QuickSort<int>::sort(vectors, 0, vectors->size());
+		}
 
 		auto End = Clock.now();
-		chrono::duration<double> Time_delay = End - Start;
-		showStatistic("Heap sort", Time_delay);
+		cout << "Time from Quick: " << chrono::duration<double>(End - Start).count() << endl;
+		return chrono::duration<double>(End - Start).count();
 	}
 
 };
