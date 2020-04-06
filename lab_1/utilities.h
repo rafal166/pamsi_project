@@ -41,14 +41,34 @@ shared_ptr<vector<shared_ptr<vector <T>>>> allocateArrays(int numberArrays, int 
 		shared_ptr<vector < T>> tmpVector = make_shared<vector < T >> ();
 
 		for (int c = 0; c < numberElemsInOneArray; c++)
-			tmpVector->push_back(rand() % 1000000);
+			tmpVector->push_back(rand() % 1000);
 		if (sortPercent > 0)
-			sort(tmpVector->begin(), tmpVector->begin() + numSorted);
+			if (sortedReverse)
+				sort(tmpVector->begin(), tmpVector->begin() + numSorted, greater<int>());
+			else
+				sort(tmpVector->begin(), tmpVector->begin() + numSorted, less<int>());
 
 		tables->push_back(tmpVector);
 	}
 
 	return tables;
+}
+
+template <typename T>
+bool isSorted(shared_ptr<vector<shared_ptr<vector <T>>>> tables, int asc = 1) {
+	T last;
+	for (shared_ptr<vector < T >> vectors : *tables) {
+		last = (*vectors)[0];
+		for (T elem : *vectors) {
+			if (asc > 0 && last > elem)
+				return false;
+			else
+				if (last < elem)
+				return false;
+			last = elem;
+		}
+	}
+	return true;
 }
 
 #endif /* UTILITIES_H */

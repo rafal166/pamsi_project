@@ -53,6 +53,11 @@ public:
 		int i = startIndex;
 		int k = 0;
 		shared_ptr<vector < T>> help_table = make_shared<vector < T >> ();
+		help_table->reserve(endIndex - startIndex);
+
+		// NIE JESTEM Z TEGO DUMNY!!!
+		// JEDNAK NIE MAM JUŻ NA TO ANI SIŁY, ANI CZASU, ANI POMYSŁU
+		// MOŻE W PRZYSZŁOŚCI SIĘ COŚ TU WYMYŚLI, ŻEBY NIE KOPIOWAĆ TEJ TABLICY
 
 		for (; i < endIndex; i++) // przepisywanie fragmentu do tablicy pomocniczej
 			help_table->push_back((*table)[i]);

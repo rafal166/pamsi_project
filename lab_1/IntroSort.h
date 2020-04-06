@@ -14,23 +14,6 @@
 template <typename T>
 class IntroSort {
 
-	static int partition(shared_ptr<vector <T>> table, int left, int right) {
-
-		int pivot = (*table)[right];
-		int i = (left - 1);
-
-		for (int j = left; j <= right - 1; j++) {
-
-			if ((*table)[j] <= pivot) {
-				i++;
-				HeapSort<T>::swap(table, i, j);
-			}
-		}
-
-		HeapSort<T>::swap(table, i + 1, right);
-		return (i + 1);
-	}
-
 	static void introSort(shared_ptr<vector <T>> table, int left, int right, int currDepth) {
 		if (right - left > 16) {
 			if (!currDepth) {

@@ -20,8 +20,15 @@ template <typename T>
 class MergeSort {
 private:
 
+	MergeSort() {
+
+	}
+
 	static void merge(shared_ptr<vector <T>> tables, int leftStart, int rightEnd) {
-		vector<T> tmpl = *tables;
+		static vector<T> tmpl(1000000);
+
+		for (int i = leftStart; i < rightEnd; i++)
+			tmpl[i - leftStart] = (*tables)[i];
 
 		int leftEnd = (rightEnd + leftStart) / 2;
 		int right = leftEnd + 1;
@@ -30,18 +37,26 @@ private:
 		int index = leftStart;
 
 		while (left <= leftEnd && right <= rightEnd)
-			if (tmpl[left] <= tmpl[right])
-				(*tables)[index++] = tmpl[left++];
-			else
-				(*tables)[index++] = tmpl[right++];
+			if (tmpl[left - leftStart] <= tmpl[right - leftStart]) {
+				(*tables)[index] = tmpl[left - leftStart];
+				index++;
+				left++;
+			} else {
+				(*tables)[index] = tmpl[right - leftStart];
+				index++;
+				right++;
+			}
 
-		while (left <= leftEnd)
-			(*tables)[index++] = tmpl[left++];
+		while (left <= leftEnd) {
+			(*tables)[index++] = tmpl[left - leftStart];
+			left++;
+		}
 	}
 
 public:
 
 	static void sort(shared_ptr<vector <T>> tables, int left, int right) {
+
 		if (right <= left) return;
 
 		int center = (left + right) / 2;
@@ -65,7 +80,6 @@ public:
 		return chrono::duration<double>(End - Start).count();
 	}
 };
-
 
 #endif /* MARGE_SORT_H */
 
