@@ -148,12 +148,12 @@ void test_intro_sort() {
 int main(int argc, char** argv) {
 	srand((unsigned) time(NULL)); // inicjowanie generatora liczb losowych
 
-	//	thread merge_thread(test_merge_sort);
-	//	thread quick_thread(test_quick_sort);
+	thread merge_thread(test_merge_sort);
+	thread quick_thread(test_quick_sort);
 	thread intro_thread(test_intro_sort);
 
-	//	merge_thread.join();
-	//	quick_thread.join();
+	merge_thread.join();
+	quick_thread.join();
 	intro_thread.join();
 
 	return 0;

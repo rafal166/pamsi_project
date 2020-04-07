@@ -9,7 +9,6 @@
       <itemPath>IntroSort.h</itemPath>
       <itemPath>MergeSort.h</itemPath>
       <itemPath>QuickSort.h</itemPath>
-      <itemPath>showStatistic.h</itemPath>
       <itemPath>utilities.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -55,8 +54,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="showStatistic.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="utilities.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
@@ -91,8 +88,6 @@
       <item path="QuickSort.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="showStatistic.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="utilities.h" ex="false" tool="3" flavor2="0">
       </item>

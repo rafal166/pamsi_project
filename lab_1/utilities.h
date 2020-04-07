@@ -44,9 +44,9 @@ shared_ptr<vector<shared_ptr<vector <T>>>> allocateArrays(int numberArrays, int 
 			tmpVector->push_back(rand() % 1000);
 		if (sortPercent > 0)
 			if (sortedReverse)
-				sort(tmpVector->begin(), tmpVector->begin() + numSorted, greater<int>());
-			else
 				sort(tmpVector->begin(), tmpVector->begin() + numSorted, less<int>());
+			else
+				sort(tmpVector->begin(), tmpVector->begin() + numSorted, greater<int>());
 
 		tables->push_back(tmpVector);
 	}
