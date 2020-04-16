@@ -10,27 +10,22 @@
 #include <cstdlib>
 #include <vector>
 #include "ListGraph.h"
+#include "GraphGenerator.h"
 
 using namespace std;
 
 vector<int> numVertices = {5, 10, 20, 30, 40}; // liczba wierzchołków w grafie
-vector<int> graphDensity = {.25, .50, .75, 1}; // gęstość grafów
-
-void generateGraph(int numVertices, int numEdges){
-
-}
+vector<double> graphDensity = {.25, .50, .75, 1}; // gęstość grafów
 
 int main(int argc, char** argv) {
 
 	ListGraph<int, int> graph;
-	//	graph.insertVertex(2);
-	//	graph.insertVertex(3);
-	//	graph.insertEdge(0, 1, 4);
 
-	//	cout << "Data: " << graph.getVertex(1)->getIndex() << endl;
-	graph.readGraphFromFile("hej.csv");
+	GraphGenerator generator;
+	generator.generateGraph(10, .25, 0, true, "my_graph.csv");
+
+	graph.readGraphFromFile("my_graph.csv");
 	graph.printAdjList();
-//	graph.saveGraphToFile("hej2.csv");
 	graph.FBFindWay();
 
 	return 0;

@@ -46,6 +46,7 @@ public:
 		refToAdjListEnd = endAdjRef;
 		//		cout << endl << ((*refToAdjListEnd) [0])->getData();
 	}
+	
 };
 
 
