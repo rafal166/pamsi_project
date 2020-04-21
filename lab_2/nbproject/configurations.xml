@@ -7,6 +7,7 @@
       <itemPath>Edge.h</itemPath>
       <itemPath>GraphGenerator.h</itemPath>
       <itemPath>ListGraph.h</itemPath>
+      <itemPath>MatrixGraph.h</itemPath>
       <itemPath>Vertex.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -46,6 +47,8 @@
       </item>
       <item path="ListGraph.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MatrixGraph.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Vertex.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -76,6 +79,8 @@
       <item path="GraphGenerator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ListGraph.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MatrixGraph.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Vertex.h" ex="false" tool="3" flavor2="0">
       </item>

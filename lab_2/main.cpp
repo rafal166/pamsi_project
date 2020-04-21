@@ -9,25 +9,72 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <thread>
 #include "ListGraph.h"
+#include "MatrixGraph.h"
 #include "GraphGenerator.h"
 
+#define NUM_RUNS 100
 using namespace std;
 
-vector<int> numVertices = {5, 10, 20, 30, 40}; // liczba wierzchołków w grafie
+vector<int> numVertices = {10, 50, 100, 500, 1000}; // liczba wierzchołków w grafie
 vector<double> graphDensity = {.25, .50, .75, 1}; // gęstość grafów
+
+void testList() {
+	vector<double> result;
+	result.clear();
+	for (int vertNum : numVertices) {
+		for (double density : graphDensity) {
+			ListGraph graphMain;
+			graphMain.generate(vertNum, density, 0, true);
+			double sum = 0;
+			result.clear();
+			result.reserve(NUM_RUNS);
+
+			for (int i = 0; i < NUM_RUNS; i++) {
+				ListGraph graph;
+				graph.generate(vertNum, density, 0, true);
+				result.push_back(graph.FBFindWay());
+			}
+			for (double res : result)
+				sum += res;
+			graphMain.addResultToFile(sum / result.size());
+			result.clear();
+		}
+	}
+}
+
+void testMatrix() {
+	vector<double> result;
+	result.clear();
+	for (int vertNum : numVertices) {
+		for (double density : graphDensity) {
+			MatrixGraph graphMain;
+			graphMain.generate(vertNum, density, 0, true);
+			double sum = 0;
+			result.clear();
+			result.reserve(NUM_RUNS);
+
+			for (int i = 0; i < NUM_RUNS; i++) {
+				MatrixGraph graph;
+				graph.generate(vertNum, density, 0, true);
+				result.push_back(graph.FBFindWay());
+			}
+			for (double res : result)
+				sum += res;
+			graphMain.addResultToFile(sum / result.size());
+			result.clear();
+		}
+	}
+}
 
 int main(int argc, char** argv) {
 
-	ListGraph<int, int> graph;
+	//	thread listTherad(testList);
+	thread matrixTherad(testMatrix);
 
-	GraphGenerator generator;
-	generator.generateGraph(10, .25, 0, true, "my_graph.csv");
-
-	graph.readGraphFromFile("my_graph.csv");
-	graph.printAdjList();
-	graph.FBFindWay();
+	//	listTherad.join();
+	matrixTherad.join();
 
 	return 0;
 }
-

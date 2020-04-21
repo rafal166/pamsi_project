@@ -15,38 +15,37 @@
 
 using namespace std;
 
-template <typename T_vertex, typename T_edge>
 class Edge {
 protected:
-	shared_ptr<Vertex < T_vertex>> start, end;
-	T_edge weight;
-	shared_ptr<vector<shared_ptr<Edge<T_vertex, T_edge>>>> refToAdjListStart, refToAdjListEnd;
+	shared_ptr<Vertex> start, end;
+	int weight;
+	//	shared_ptr<vector<shared_ptr<Edge>>> refToAdjListStart, refToAdjListEnd;
 public:
 
-	Edge(shared_ptr<Vertex < T_vertex>> newStart, shared_ptr<Vertex < T_vertex>> newEnd, T_edge newWeight) {
+	Edge(shared_ptr<Vertex> newStart, shared_ptr<Vertex> newEnd, int newWeight) {
 		start = newStart;
 		end = newEnd;
 		weight = newWeight;
 	}
 
-	shared_ptr<Vertex < T_vertex>> getStart() {
+	shared_ptr<Vertex> getStart() {
 		return start;
 	}
 
-	shared_ptr<Vertex < T_vertex>> getEnd() {
+	shared_ptr<Vertex> getEnd() {
 		return end;
 	}
 
-	T_edge getWeight() {
+	int getWeight() {
 		return weight;
 	}
 
-	void setAdjRefs(shared_ptr<vector<shared_ptr<Edge<T_vertex, T_edge>>>> startAdjRef, shared_ptr<vector<shared_ptr<Edge<T_vertex, T_edge>>>> endAdjRef) {
-		refToAdjListStart = startAdjRef;
-		refToAdjListEnd = endAdjRef;
-		//		cout << endl << ((*refToAdjListEnd) [0])->getData();
-	}
-	
+	//	void setAdjRefs(shared_ptr<vector<shared_ptr<Edge>>> startAdjRef, shared_ptr<vector<shared_ptr<Edge>>> endAdjRef) {
+	//		refToAdjListStart = startAdjRef;
+	//		refToAdjListEnd = endAdjRef;
+	//		//		cout << endl << ((*refToAdjListEnd) [0])->getData();
+	//	}
+
 };
 
 

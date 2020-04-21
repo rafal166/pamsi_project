@@ -11,19 +11,13 @@
 
 using namespace std;
 
-template <typename T_vertex>
 class Vertex {
 protected:
-	T_vertex data;
 	unsigned int index;
 public:
 
 	Vertex(int newIndex) {
 		index = newIndex;
-	}
-
-	T_vertex getData() {
-		return data;
 	}
 
 	int getIndex() {

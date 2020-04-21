@@ -15,18 +15,20 @@
 #include <cstdlib>
 #include <vector>
 #include <memory>
+#include <fstream>
+
 #define FLAG_IF_EDGE_EXISTS 1
 #define FLAG_IF_EDGE_NOT_EXISTS -1
-#define EDGE_WEIGHT_RANGE_LOW 1
-#define EDGE_WEIGHT_RANGE_HIGH 100
+#define EDGE_WEIGHT_RANGE_LOW 2
+#define EDGE_WEIGHT_RANGE_HIGH 10
 
 using namespace std;
 
 class GraphGenerator {
-protected:
+public:
 	vector<int> vertices;
 	vector<vector<int>> edges;
-	int startVertice, numAllEdges;
+	int startVertice, numAllVertices, numAllEdges;
 
 	int getRandomWeight() {
 		return rand() % EDGE_WEIGHT_RANGE_HIGH + EDGE_WEIGHT_RANGE_LOW;
@@ -37,20 +39,19 @@ protected:
 			return true;
 		return false;
 	}
-public:
 
 	GraphGenerator() {
 		srand((unsigned) time(NULL));
 	}
 
 	void generateGraph(int numVertices, double graphDensity = 0, int startVert = 0, bool consistent = true, string fileName = "") {
-
-		int numEdges = (graphDensity > 0) ? numVertices * (numVertices - 1) * graphDensity : 0;
+		numAllVertices = numVertices;
+		int numEdges = (graphDensity > 0) ? numVertices * (numVertices - 1) * graphDensity / 2 : 0;
 		int finalNumEdges = consistent ? numEdges - numVertices : numEdges;
 		int tmpStart, tmpEnd = 1;
 		bool succes;
 		vector<int> tmpVec;
-		cout << "numEdges: " << numEdges << endl;
+
 		startVertice = startVert;
 		numAllEdges = numEdges;
 		vertices.reserve(numVertices);
@@ -94,9 +95,9 @@ public:
 			saveGraphToFile(fileName);
 	}
 
-	void saveGraphToFile(string filename) {
+	void saveGraphToFile(string fileName) {
 		ofstream file;
-		file.open(filename);
+		file.open(fileName);
 
 
 		file << vertices.size() << "\t" << numAllEdges << "\t" << startVertice << "\n"; // zapisywanie początkowych wartości dla grafu
