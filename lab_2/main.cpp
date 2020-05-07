@@ -27,6 +27,7 @@ void testList() {
 		for (double density : graphDensity) {
 			ListGraph graphMain;
 			graphMain.generate(vertNum, density, 0, true);
+
 			double sum = 0;
 			result.clear();
 			result.reserve(NUM_RUNS);
@@ -36,6 +37,7 @@ void testList() {
 				graph.generate(vertNum, density, 0, true);
 				result.push_back(graph.FBFindWay());
 			}
+
 			for (double res : result)
 				sum += res;
 			graphMain.addResultToFile(sum / result.size());
@@ -62,13 +64,13 @@ void testMatrix() {
 			}
 			for (double res : result)
 				sum += res;
-			graphMain.addResultToFile(sum / result.size());
+//			graphMain.addResultToFile(sum / result.size());
 			result.clear();
 		}
 	}
 }
 
-int main(int argc, char** argv) {
+int main() {
 
 	//	thread listTherad(testList);
 	thread matrixTherad(testMatrix);

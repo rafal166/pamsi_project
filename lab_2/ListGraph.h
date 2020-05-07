@@ -253,7 +253,7 @@ public:
 	void saveWayPrices(string filename) {
 		// wypisywanie do konsoli wyniku
 		//		cout << endl << "Najkrótsze drogi to: " << endl;
-		//		for (int i = 0; i < wayPrices.size(); i++)
+				//for (int i = 0; i < wayPrices.size(); i++)
 		//			coute << i << ") " << wayPrices[i] << endl;
 
 		ofstream file;

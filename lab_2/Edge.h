@@ -19,7 +19,6 @@ class Edge {
 protected:
 	shared_ptr<Vertex> start, end;
 	int weight;
-	//	shared_ptr<vector<shared_ptr<Edge>>> refToAdjListStart, refToAdjListEnd;
 public:
 
 	Edge(shared_ptr<Vertex> newStart, shared_ptr<Vertex> newEnd, int newWeight) {
@@ -39,13 +38,6 @@ public:
 	int getWeight() {
 		return weight;
 	}
-
-	//	void setAdjRefs(shared_ptr<vector<shared_ptr<Edge>>> startAdjRef, shared_ptr<vector<shared_ptr<Edge>>> endAdjRef) {
-	//		refToAdjListStart = startAdjRef;
-	//		refToAdjListEnd = endAdjRef;
-	//		//		cout << endl << ((*refToAdjListEnd) [0])->getData();
-	//	}
-
 };
 
 
